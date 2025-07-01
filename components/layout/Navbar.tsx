@@ -16,21 +16,21 @@ export default function Navbar() {
     <>
       <nav className="bg-white shadow sticky top-0 z-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-          {/* Logo and Title with smooth animation */}
+          {/* Logo and Title with bigger size and shining animation */}
           <Link
             href="/"
-            className="flex items-center space-x-4 group transition-transform duration-300 ease-in-out hover:scale-105 focus:scale-105 focus:outline-none"
+            className="flex items-center space-x-5 group transition-transform duration-300 ease-in-out hover:scale-110 focus:scale-110 focus:outline-none"
             aria-label="Snazzy Wear Home"
           >
             <Image
               src="/logo.png"
               alt="Snazzy Wear Logo"
-              width={48}
-              height={48}
-              className="object-contain drop-shadow-sm group-hover:drop-shadow-md transition-shadow duration-300 ease-in-out"
+              width={64}
+              height={64}
+              className="object-contain drop-shadow-md group-hover:drop-shadow-[0_0_15px_rgba(219,39,119,0.7)] transition-shadow duration-500 ease-in-out"
               priority
             />
-            <span className="text-3xl font-extrabold text-pink-600 tracking-wide select-none group-hover:text-pink-700 transition-colors duration-300 ease-in-out">
+            <span className="text-4xl font-extrabold text-pink-600 tracking-wide select-none group-hover:text-pink-700 transition-colors duration-500 ease-in-out">
               Snazzy Wear
             </span>
           </Link>
@@ -155,3 +155,4 @@ export default function Navbar() {
     </>
   );
 }
+

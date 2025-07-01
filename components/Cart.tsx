@@ -61,7 +61,7 @@ export function Cart({ onClose }: Props) {
         {cart.length === 0 ? (
           <div className="empty-cart text-center mt-20">
             <AiOutlineShopping size={120} className="mx-auto text-gray-400" />
-            <h3 className="text-xl mt-4">Your shopping bag is empty</h3>
+            <h3 className="text-xl mt-4">Look fabulous — fill your cart now!</h3>
             <Link href="/">
               <button onClick={onClose} className="mt-6 bg-black text-white px-4 py-2 rounded">
                 Continue Shopping
