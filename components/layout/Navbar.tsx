@@ -4,10 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Cart } from "@/components/Cart";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+
+  const { user, signOutUser } = useAuthContext();
 
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
   const toggleCart = () => setCartOpen(!cartOpen);
@@ -16,7 +19,7 @@ export default function Navbar() {
     <>
       <nav className="bg-white shadow sticky top-0 z-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-          {/* Logo and Title with bigger size and shining animation */}
+          {/* Logo and Title */}
           <Link
             href="/"
             className="flex items-center space-x-5 group transition-transform duration-300 ease-in-out hover:scale-110 focus:scale-110 focus:outline-none"
@@ -67,23 +70,35 @@ export default function Navbar() {
           </ul>
 
           {/* Cart & User Icons */}
-          <div className="hidden md:flex items-center space-x-8 text-2xl cursor-pointer text-gray-700">
+          <div className="hidden md:flex items-center space-x-6 text-gray-700">
             <button
               aria-label="Cart"
-              className="relative hover:text-pink-600 transition"
+              className="relative hover:text-pink-600 transition text-2xl"
               onClick={toggleCart}
               style={{ padding: "8px" }}
             >
               🛒
-              {/* Optionally add cart count badge here */}
+              {/* Add cart badge here if needed */}
             </button>
-            <button
-              aria-label="User Account"
-              className="hover:text-pink-600 transition"
-              style={{ padding: "8px" }}
-            >
-              👤
-            </button>
+
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <span className="text-lg font-medium truncate max-w-[160px]">{user.email}</span>
+                <button
+                  onClick={signOutUser}
+                  className="hover:text-pink-600 transition px-3 py-1 rounded border border-pink-600 text-pink-600"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/register"
+                className="hover:text-pink-600 transition px-3 py-1 rounded border border-pink-600 text-pink-600"
+              >
+                👤
+              </Link>
+            )}
           </div>
 
           {/* Mobile hamburger menu button */}
@@ -139,12 +154,28 @@ export default function Navbar() {
                 >
                   🛒
                 </button>
-                <button
-                  aria-label="User Account"
-                  className="hover:text-pink-600 transition"
-                >
-                  👤
-                </button>
+
+                {user ? (
+                  <button
+                    aria-label="Logout"
+                    className="hover:text-pink-600 transition"
+                    onClick={() => {
+                      signOutUser();
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    🚪
+                  </button>
+                ) : (
+                  <Link
+                    href="/register"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="hover:text-pink-600 transition"
+                    aria-label="Register or Sign In"
+                  >
+                    👤
+                  </Link>
+                )}
               </li>
             </ul>
           </div>
@@ -155,4 +186,3 @@ export default function Navbar() {
     </>
   );
 }
-
