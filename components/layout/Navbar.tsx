@@ -12,8 +12,11 @@ export default function Navbar() {
 
   const { user, signOutUser } = useAuthContext();
 
-  const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
-  const toggleCart = () => setCartOpen(!cartOpen);
+  const toggleMobileMenu = () => setMobileMenuOpen((open) => !open);
+  const toggleCart = () => setCartOpen((open) => !open);
+
+  // Show Admin link only if user is admin email
+  const isAdmin = user?.email === "montassar579@gmail.com";
 
   return (
     <>
@@ -41,32 +44,31 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <ul className="hidden md:flex space-x-10 text-gray-700 font-semibold text-lg">
             <li>
-              <Link
-                href="/shop"
-                className="relative px-1 py-1 hover:text-pink-600 transition"
-              >
+              <Link href="/shop" className="relative px-1 py-1 hover:text-pink-600 transition">
                 Shop
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-pink-600 rounded opacity-0 hover:opacity-100 transition"></span>
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-pink-600 rounded opacity-0 hover:opacity-100 transition" />
               </Link>
             </li>
             <li>
-              <Link
-                href="/about"
-                className="relative px-1 py-1 hover:text-pink-600 transition"
-              >
+              <Link href="/about" className="relative px-1 py-1 hover:text-pink-600 transition">
                 About
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-pink-600 rounded opacity-0 hover:opacity-100 transition"></span>
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-pink-600 rounded opacity-0 hover:opacity-100 transition" />
               </Link>
             </li>
             <li>
-              <Link
-                href="/contact"
-                className="relative px-1 py-1 hover:text-pink-600 transition"
-              >
+              <Link href="/contact" className="relative px-1 py-1 hover:text-pink-600 transition">
                 Contact
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-pink-600 rounded opacity-0 hover:opacity-100 transition"></span>
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-pink-600 rounded opacity-0 hover:opacity-100 transition" />
               </Link>
             </li>
+            {isAdmin && (
+              <li>
+                <Link href="/admin" className="relative px-1 py-1 font-semibold text-pink-600 hover:text-pink-700 transition">
+                  Admin
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-pink-700 rounded opacity-0 hover:opacity-100 transition" />
+                </Link>
+              </li>
+            )}
           </ul>
 
           {/* Cart & User Icons */}
@@ -117,32 +119,27 @@ export default function Navbar() {
           <div className="md:hidden bg-white shadow-lg border-t border-gray-200">
             <ul className="flex flex-col space-y-4 px-8 py-6 text-gray-700 font-semibold text-lg">
               <li>
-                <Link
-                  href="/shop"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block hover:text-pink-600 transition"
-                >
+                <Link href="/shop" onClick={() => setMobileMenuOpen(false)} className="block hover:text-pink-600 transition">
                   Shop
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/about"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block hover:text-pink-600 transition"
-                >
+                <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="block hover:text-pink-600 transition">
                   About
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block hover:text-pink-600 transition"
-                >
+                <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="block hover:text-pink-600 transition">
                   Contact
                 </Link>
               </li>
+              {isAdmin && (
+                <li>
+                  <Link href="/admin" onClick={() => setMobileMenuOpen(false)} className="block font-semibold text-pink-600 hover:text-pink-700 transition">
+                    Admin
+                  </Link>
+                </li>
+              )}
               <li className="flex space-x-6 pt-6 border-t border-gray-200 text-3xl justify-center">
                 <button
                   aria-label="Cart"

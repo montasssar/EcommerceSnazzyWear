@@ -21,16 +21,16 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const auth = useAuth();
 
-  // Add signInWithGoogle here
   const authInstance = getAuth();
   const googleProvider = new GoogleAuthProvider();
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = async (): Promise<void> => {
     try {
       await signInWithPopup(authInstance, googleProvider);
-      // user state update should be handled inside useAuth hook
-    } catch (error) {
-      throw error;
+      // User state updates handled by useAuth hook internally
+    } catch (error: unknown) {
+      // You can add logging or user-friendly messages here
+      throw error instanceof Error ? error : new Error("Google sign-in failed");
     }
   };
 
@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 };
 
-export function useAuthContext() {
+export function useAuthContext(): AuthContextType {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuthContext must be used within AuthProvider");
